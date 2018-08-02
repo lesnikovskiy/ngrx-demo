@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class CompanyEffects {
     constructor(
         private readonly actions$: Actions,
-        private companyService: CompanyServiceService
+        private readonly companyService: CompanyServiceService
     ) { }
 
     @Effect()

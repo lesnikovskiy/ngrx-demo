@@ -1,11 +1,13 @@
-<nav class="navbar navbar-light bg-faded">
-  <a routerLink="['/home']" class="navbar-brand">ngrx CRM</a>
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item" [routerLinkActive]="'active'">
-      <a [routerLink]="['/company/list']" class="nav-link">Companies</a>
-    </li>
-  </ul>
-</nav>
+<header>
+  <nav class="navbar navbar-light bg-faded">
+    <a routerLink="['/home']" class="navbar-brand">ngrx CRM</a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" [routerLinkActive]="'active'">
+        <a [routerLink]="['/company/list']" class="nav-link">Companies</a>
+      </li>
+    </ul>
+  </nav>
+</header>
 <div class="container">
   <router-outlet></router-outlet>
 </div>
