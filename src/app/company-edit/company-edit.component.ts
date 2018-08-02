@@ -54,4 +54,8 @@ export class CompanyEditComponent implements OnInit {
       this.companyService.updateCompany(companyToUpdate).subscribe(() => this.router.navigate([`/company/list`]));
     }
   }
+
+  cancel() {
+    this.router.navigate(['/company/list']);
+  }
 }
