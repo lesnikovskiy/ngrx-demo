@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { CompanyServiceService } from './../company-service.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from './../models/appState';
 import * as companyActions from './../actions/company.actions';
-import { filter, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
+import { CompanyEffects } from './../effects/company.effects';
 import { Company } from './../models/company';
 
 @Component({
@@ -23,8 +23,8 @@ export class CompanyEditComponent implements OnInit {
     private readonly store: Store<AppState>,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly companyService: CompanyServiceService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly companyEffects: CompanyEffects
   ) { }
 
   ngOnInit() {
@@ -53,10 +53,16 @@ export class CompanyEditComponent implements OnInit {
 
   saveCompany() {
     if (this.isNewCompany) {
-      this.companyService.addCompany(this.companyForm.value).subscribe(() => this.router.navigate([`/company/list`]));
+      this.store.dispatch(new companyActions.AddCompanyAction(this.companyForm.value));
+      this.companyEffects.addCompany$.pipe(filter(action => action.type === companyActions.ADD_COMPANY_SUCCESS)).subscribe(() => {
+        this.router.navigate([`/company/list`]);
+      });
     } else {
       const companyToUpdate = { ...this.companyForm.value, id: this.companyId };
-      this.companyService.updateCompany(companyToUpdate).subscribe(() => this.router.navigate([`/company/list`]));
+      this.store.dispatch(new companyActions.EditCompanyAction(companyToUpdate));
+      this.companyEffects.editCompany$.pipe(filter(action => action.type === companyActions.EDIT_COMPANY_SUCCESS)).subscribe(() => {
+        this.router.navigate([`/company/list`]);
+      });
     }
   }
 

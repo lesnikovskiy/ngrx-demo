@@ -33,6 +33,22 @@ export function companyReducer(state = initialState, action: fromCompanies.Actio
                 errMessage: state.errMessage
             };
         }
+        case fromCompanies.EDIT_COMPANY_SUCCESS: {
+            return state = {
+                companies: state.companies,
+                company: action.payload,
+                hasError: state.hasError,
+                errMessage: state.errMessage
+            };
+        }
+        case fromCompanies.ADD_COMPANY_SUCCESS: {
+            return state = {
+                companies: [...state.companies, action.payload],
+                company: action.payload,
+                hasError: state.hasError,
+                errMessage: state.errMessage
+            };
+        }
         case fromCompanies.DELETE_COMPANY_SUCCESS: {
             return state = {
                 companies: state.companies.filter(company => company.id && company.id !== action.payload),

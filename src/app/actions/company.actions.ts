@@ -7,6 +7,10 @@ export const DELETE_COMPANY = 'DELETE_COMPANY';
 export const DELETE_COMPANY_SUCCESS = 'DELETE_COMPANY_SUCCESS';
 export const LOAD_COMPANY = 'LOAD_COMPANY';
 export const LOAD_COMPANY_SUCCESS = 'LOAD_COMPANY_SUCCESS';
+export const EDIT_COMPANY = 'EDIT_COMPANY';
+export const EDIT_COMPANY_SUCCESS = 'EDIT_COMPANY_SUCCESS';
+export const ADD_COMPANY = 'ADD_COMPANY';
+export const ADD_COMPANY_SUCCESS = 'ADD_COMPANY_SUCCESS';
 export const HTTP_ERROR = 'HTTP_ERROR';
 
 export class LoadCompaniesAction implements Action {
@@ -33,6 +37,30 @@ export class LoadCompanySuccessAction implements Action {
     constructor(public payload: Company) { }
 }
 
+export class EditCompanyAction implements Action {
+    readonly type = EDIT_COMPANY;
+
+    constructor(public payload: Company) { }
+}
+
+export class EditCompanySuccessAction implements Action {
+    readonly type = EDIT_COMPANY_SUCCESS;
+
+    constructor(public payload: Company) { }
+}
+
+export class AddCompanyAction implements Action {
+    readonly type = ADD_COMPANY;
+
+    constructor(public payload: Company) { }
+}
+
+export class AddCompanySuccessAction implements Action {
+    readonly type = ADD_COMPANY_SUCCESS;
+
+    constructor(public payload: Company) { }
+}
+
 export class DeleteCompanyAction implements Action {
     readonly type = DELETE_COMPANY;
 
@@ -52,4 +80,5 @@ export class HttpErrorAction implements Action {
 }
 
 export type Actions = LoadCompaniesAction | LoadCompaniesSuccessAction | DeleteCompanyAction | DeleteCompanySuccessAction
-    | LoadCompanyAction | LoadCompanySuccessAction | HttpErrorAction;
+    | LoadCompanyAction | LoadCompanySuccessAction | EditCompanyAction | EditCompanySuccessAction
+    | AddCompanyAction | AddCompanySuccessAction | HttpErrorAction;

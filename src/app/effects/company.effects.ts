@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError, share } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { Company } from './../models/company';
@@ -40,7 +40,34 @@ export class CompanyEffects {
                     map(company => new companyActions.LoadCompanySuccessAction(company)),
                     catchError((err: HttpErrorResponse) => of(new companyActions.HttpErrorAction(`${err.status} ${err.statusText}`)))
                 );
-            })
+            }),
+            share()
+        );
+
+    @Effect()
+    editCompany$ = this.actions$
+        .ofType(companyActions.EDIT_COMPANY)
+        .pipe(
+            switchMap((action: companyActions.EditCompanyAction) => {
+                return this.companyService.updateCompany(action.payload).pipe(
+                    map((company: Company) => new companyActions.EditCompanySuccessAction(company)),
+                    catchError((err: HttpErrorResponse) => of(new companyActions.HttpErrorAction(`${err.status} ${err.statusText}`)))
+                );
+            }),
+            share()
+        );
+
+    @Effect()
+    addCompany$ = this.actions$
+        .ofType(companyActions.ADD_COMPANY)
+        .pipe(
+            switchMap((action: companyActions.AddCompanyAction) => {
+                return this.companyService.addCompany(action.payload).pipe(
+                    map((company: Company) => new companyActions.AddCompanySuccessAction(company)),
+                    catchError((err: HttpErrorResponse) => of(new companyActions.HttpErrorAction(`${err.status} ${err.statusText}`)))
+                );
+            }),
+            share()
         );
 
     @Effect()
