@@ -9,11 +9,22 @@ import { CompanyListComponent } from './company-list/company-list.component';
 import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { CompanyTableComponent } from './company-table/company-table.component';
 
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { CompanyEffects } from './effects/company.effects';
 import { companyReducer } from './reducers/company.reducers';
+
+function debug(reducer: ActionReducer<any>): ActionReducer<any> {
+  return function (state, action) {
+    console.log('state', state);
+    console.log('action', action);
+
+    return reducer(state, action);
+  };
+}
+
+const metaReducers: MetaReducer<any>[] = [debug];
 
 @NgModule({
   declarations: [
@@ -28,9 +39,19 @@ import { companyReducer } from './reducers/company.reducers';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({companies: companyReducer}),
+    StoreModule.forRoot({ companies: companyReducer }, {
+      metaReducers,
+      initialState: {
+        companies: {
+          companies: [],
+          company: null,
+          hasError: false,
+          errMessage: null
+        }
+      }
+    }),
     EffectsModule.forRoot([CompanyEffects]),
-    StoreDevtoolsModule.instrument({maxAge: 25})
+    StoreDevtoolsModule.instrument({ maxAge: 25 })
   ],
   providers: [],
   bootstrap: [AppComponent]

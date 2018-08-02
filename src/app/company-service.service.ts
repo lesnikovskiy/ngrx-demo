@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Company } from './models/company';
 
 const API_BASE = 'http://firebootcamp-crm-api.azurewebsites.net/api';
@@ -38,6 +38,6 @@ export class CompanyServiceService {
   }
 
   handleError(e: HttpErrorResponse) {
-    return Observable.throw(e.error);
+    return throwError(e);
   }
 }

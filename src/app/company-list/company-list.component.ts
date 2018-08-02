@@ -13,12 +13,17 @@ import * as companyActions from './../actions/company.actions';
 export class CompanyListComponent implements OnInit {
 
   companies$: Observable<Company[]>;
+  hasError$: Observable<boolean>;
+  errMessage$: Observable<string>;
 
   constructor(private readonly store: Store<AppState>) { }
 
   ngOnInit() {
     this.loadCompanies();
+
     this.companies$ = this.store.select(state => state.companies.companies);
+    this.hasError$ = this.store.select(state => state.companies.hasError);
+    this.errMessage$ = this.store.select(state => state.companies.errMessage);
   }
 
   loadCompanies() {

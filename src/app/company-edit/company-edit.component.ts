@@ -6,6 +6,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from './../models/appState';
 import * as companyActions from './../actions/company.actions';
+import { filter, tap } from 'rxjs/operators';
+import { Company } from './../models/company';
 
 @Component({
   selector: 'app-company-edit',
@@ -35,7 +37,10 @@ export class CompanyEditComponent implements OnInit {
   }
 
   getCompany() {
-    this.companyService.getCompany(+this.companyId).subscribe(company => this.companyForm.patchValue(company));
+    this.store.dispatch(new companyActions.LoadCompanyAction(+this.companyId));
+    this.store.select(state => state).pipe(
+      filter(state => state.companies.company != null)
+    ).subscribe((state => this.companyForm.patchValue(state.companies.company)));
   }
 
   buildForm() {

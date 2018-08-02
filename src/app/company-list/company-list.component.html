@@ -2,4 +2,7 @@
   Companies
   <button class="btn btn-success float-right" [routerLink]="['/company/edit', 'new']">Add</button>
 </h2>
-<app-company-table [companies]="companies$ | async" (deleteCompany)="deleteCompany($event)"></app-company-table>
+<div *ngIf="hasError$ | async" class="alert alert-danger">
+  {{ errMessage$ | async }}
+</div>
+<app-company-table *ngIf="!(hasError$ | async)" [companies]="companies$ | async" (deleteCompany)="deleteCompany($event)"></app-company-table>

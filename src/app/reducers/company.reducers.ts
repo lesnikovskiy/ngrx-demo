@@ -1,24 +1,52 @@
 import { Company } from './../models/company';
 import * as fromCompanies from './../actions/company.actions';
 
-export interface State {
+class State {
     companies: Company[];
+    company: Company;
+    hasError: boolean;
+    errMessage: string;
 }
 
 const initialState: State = {
-    companies: []
+    companies: [],
+    company: null,
+    hasError: false,
+    errMessage: null
 };
 
 export function companyReducer(state = initialState, action: fromCompanies.Actions) {
     switch (action.type) {
         case fromCompanies.LOAD_COMPANIES_SUCCESS: {
             return state = {
-                companies: action.payload
+                companies: action.payload,
+                company: state.company,
+                hasError: state.hasError,
+                errMessage: state.errMessage
+            };
+        }
+        case fromCompanies.LOAD_COMPANY_SUCCESS: {
+            return state = {
+                companies: state.companies,
+                company: action.payload,
+                hasError: state.hasError,
+                errMessage: state.errMessage
             };
         }
         case fromCompanies.DELETE_COMPANY_SUCCESS: {
             return state = {
-                companies: state.companies.filter(company => company.id && company.id !== action.payload)
+                companies: state.companies.filter(company => company.id && company.id !== action.payload),
+                company: state.company,
+                hasError: state.hasError,
+                errMessage: state.errMessage
+            };
+        }
+        case fromCompanies.HTTP_ERROR: {
+            return state = {
+                companies: state.companies,
+                company: state.company,
+                hasError: true,
+                errMessage: action.payload
             };
         }
         default: {
