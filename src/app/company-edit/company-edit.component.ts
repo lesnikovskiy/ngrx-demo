@@ -3,9 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
-import { AppState } from './../models/appState';
-import * as companyActions from './../actions/company.actions';
-import { CompanyEffects } from './../effects/company.effects';
+import { AppState } from '../models/appState';
+import * as companyActions from '../actions/company.actions';
+import { CompanyEffects } from '../effects/company.effects';
 
 @Component({
   selector: 'app-company-edit',

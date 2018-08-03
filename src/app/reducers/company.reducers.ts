@@ -1,5 +1,5 @@
-import { Company } from './../models/company';
-import * as fromCompanies from './../actions/company.actions';
+import { Company } from '../models/company';
+import * as fromCompanies from '../actions/company.actions';
 
 class State {
     companies: Company[];

@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Company } from './../models/company';
+import { Company } from '../models/company';
 
 @Component({
   selector: 'app-company-table',

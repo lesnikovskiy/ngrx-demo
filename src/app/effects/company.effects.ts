@@ -3,9 +3,9 @@ import { Actions, Effect } from '@ngrx/effects';
 import { map, switchMap, catchError, share } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { Company } from './../models/company';
-import { CompanyServiceService } from './../company-service.service';
-import * as companyActions from './../actions/company.actions';
+import { Company } from '../models/company';
+import { CompanyServiceService } from '../company-service.service';
+import * as companyActions from '../actions/company.actions';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
